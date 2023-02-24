@@ -17,7 +17,10 @@ def main(input=sys.stdin, output=sys.stdout):
 
 
 def get_lowest_cost(edges, s, e):
-    pass
+    global cost
+
+    for node in edges[s]:
+        pass
 
 
 if __name__ == '__main__':
