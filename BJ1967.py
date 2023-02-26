@@ -10,38 +10,41 @@ def main(input=sys.stdin, output=sys.stdout):
 
     n = int(input.readline())
 
-    cost = [[float('inf') for _ in range(n + 1)] for _ in range(n + 1)]
+    cost = [{} for _ in range(n + 1)]
     edges = [{} for _ in range(n + 1)]
     for i in range(n - 1):
         a, b, v = map(int, input.readline().split())
         edges[a][b] = v
         edges[b][a] = v
 
-    ans = 0
-    for s in range(1, n + 1):
-        for e in range(1, n + 1):
-            if s == e:
-                continue
-            ans = max(ans, get_lowest_cost(s, e))
+    leaf = []
+    for i in range(1, n + 1):
+        if len(edges[i]) == 1:
+            leaf.append(i)
 
-    output.write(f'{ans}')
+    ans = []
+    for node in leaf:
+        ans.append(get_lowest_cost(1, node))
+
+    ans.sort()
+    if len(ans) > 2:
+        output.write(f'{ans[0] + ans[1]}')
+    else:
+        output.write(f'{ans[0]}')
 
 
 def get_lowest_cost(start, end):
     global n, cost, edges
 
-    for node in edges[start]:
-        if edges[start][node] == -1:
-            continue
-
-        if node == end:
-            cost[start][end] = edges[start][node]
-        else:
-            del edges[node][start]
-            c = get_lowest_cost(node, end)
-            cost[start][end] = min(cost[start][end], c + edges[start][node])
-
-            edges[node][start] = edges[start][node]
+    if end in cost[start]:
+        return end
+    else:
+        for node in edges[start]:
+            if node == end:
+                cost[start][node] = edges[start][node]
+            else:
+                cost[node][end] = get_lowest_cost(node, end)
+                cost[start][node] = edges[start][node] + cost[node][end]
 
     return cost[start][end]
 
