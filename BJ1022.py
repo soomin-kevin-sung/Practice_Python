@@ -13,73 +13,49 @@ def main(input=sys.stdin, output=sys.stdout):
     noc = c2 - c1 + 1
 
     board = [[0 for _ in range(noc)] for _ in range(nor)]
-    startpoint, num = get_arguments(r1, c1, r2, c2)
-    total_count = nor * noc
 
-    dr = [-1, 0, 1, 0]
-    dc = [0, -1, 0, 1]
+    max_number = 0
 
-    r = startpoint[0] - r1
-    c = startpoint[1] - c1
+    for i in range(nor):
+        for j in range(noc):
+            board[i][j] = get_number(r1 + i, c1 + j)
+            max_number = max(max_number, board[i][j])
 
-    d = 0
-    cnt = 1
-    dcnt = startpoint[1] * 2
+    num_of_digit = len(str(max_number))
 
-    if num == 1:
-        d = 3
-        cnt = 0
-        dcnt = 1
-
-    total_count = nor * noc
-    while total_count > 0:
-        if set_number(r, c, num):
-            total_count -= 1
-
-        num += 1
-        cnt += 1
-
-        if cnt == dcnt:
-            cnt = 0
-            d = (d + 1) % 4
-
-            if d == 0:
-                dcnt += 1
-
-        r += dr[d]
-        c += dc[d]
+    for row in board:
+        for cell in row:
+            output.write(f'{cell:{num_of_digit}} ')
+        output.write('\n')
 
 
-
-
-    # for row in board:
-    #     for cell in row:
-    #         output.write(f'{cell:2} ')
-    #     output.write('\n')
-
-
-def get_arguments(r1, c1, r2, c2):
-    abs_geo = [abs(r1), abs(c1), abs(r2), abs(c2)]
-    minpoint = min(abs_geo)
-
-    if minpoint == 0:
-        startpoint = (0, 0)
-        num = 1
-    else:
-        startpoint = (minpoint - 1, minpoint)
-        num = (1 + (minpoint - 1) * 2) ** 2
-
-    return startpoint, num
-
-
-def set_number(r, c, n):
+def get_number(r, c):
     global board, nor, noc
 
-    if 0 <= r < nor and 0 <= c < noc:
-        board[r][c] = n
-        return True
+    level = max(abs(r), abs(c))
+    br = (1 + level * 2) ** 2
+    d = get_direction(r, c, level)
+    cd = [1, 1, -1, -1]
 
-    return False
+    if d % 2 == 0:
+        return br - (2 * level * d) - abs(level * cd[d] - c)
+    else:
+        return br - (2 * level * d) - abs(level * cd[d] - r)
+
+
+def get_direction(r, c, level):
+    # bottom
+    if r == level:
+        return 0
+    # left
+    elif c == -level:
+        return 1
+    # top
+    elif r == -level:
+        return 2
+    # right
+    else:
+        return 3
 
 
 if __name__ == '__main__':
