@@ -1,44 +1,47 @@
 import sys
+import math
 
-# 푸는 중
+n, m = 0, 0
+table = []
+
 
 def main(input=sys.stdin, output=sys.stdout):
+    global n, m, table
+
     n, m = map(int, input.readline().split())
 
-    table = []
     for _ in range(n):
-        table.append(list(map(int, list(input.readline().strip()))))
+        table.append(list(input.readline().strip()))
 
-    for r in range(n):
-        for row_int in range(n - r):
-            rows = get_selection(r, n, row_int)
-            if len(rows) == 1:
-                rows = rows * m
+    max_num = -1
+    for i in range(n):
+        for j in range(m):
+            # 각 점을 돌면서 row_int, col_int에 따른 숫자들을 모두 판단한다.
+            for row_int in range(-n + 1, n):
+                for col_int in range(-m + 1, m):
+                    nums = get_number(i, j, row_int, col_int)
+                    for num in nums:
+                        if math.sqrt(num).is_integer() and max_num < num:
+                            max_num = num
 
-            for c in range(m):
-                for col_int in range(m - c):
-                    cols = get_selection(c, m, col_int)
-                    if len(cols) < len(rows):
-                        continue
-
-                    for i in range(len(cols)):
-                        output.write(f'{table[rows[i]][cols[i]]}')
-
-                    output.write('\n')
+    output.write(f'{max_num}')
 
 
-def get_selection(start, end, interval):
-    if interval == 0:
-        return [start]
+def get_number(r, c, row_int, col_int):
+    global n, m, table
 
-    result = []
+    if row_int == 0 and col_int == 0:
+        yield int(table[r][c])
 
-    item = start
-    while item < end:
-        result.append(item)
-        item += interval
+    else:
+        ans = ''
 
-    return result
+        while 0 <= r < n and 0 <= c < m:
+            ans += table[r][c]
+            r += row_int
+            c += col_int
+
+            yield int(ans)
 
 
 if __name__ == '__main__':
