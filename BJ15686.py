@@ -36,14 +36,14 @@ def get_distance(home, chicken):
 def dfs(idx):
     global chickens, selected_chickens
 
-    if idx == m:
+    if len(selected_chickens) == m:
         return chicken_distance_of_city(selected_chickens)
     else:
-        min_dist = 101
+        min_dist = n * 2 * n ** 2
         for i in range(idx, len(chickens)):
             selected_chickens.append(i)
 
-            dist = dfs(idx + 1)
+            dist = dfs(i + 1)
             if min_dist > dist:
                 min_dist = dist
 
@@ -53,12 +53,12 @@ def dfs(idx):
 
 
 def chicken_distance_of_city(opened_chickens):
-    global chicken_dists, homes
+    global n, chicken_dists, homes
 
     ans = 0
 
     for home in range(len(homes)):
-        dist = 101
+        dist = 2 * n
         for chicken in opened_chickens:
             dist = min(dist, chicken_dists[home][chicken])
 
