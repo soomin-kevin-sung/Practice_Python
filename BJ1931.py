@@ -1,7 +1,5 @@
 import sys
 
-# 푸는 중
-
 input = sys.stdin
 output = sys.stdout
 
@@ -12,6 +10,15 @@ for _ in range(n):
     s, e = map(int, input.readline().split())
     meetings.append((s, e))
 
-meetings.sort(key=lambda t: (t[0], t[1] - t[0]))
-output.write(f'{meetings}')
+meetings.sort(key=lambda t: (t[1], t[0]))
+
+ans = 0
+e = 0
+
+for meeting in meetings:
+    if e <= meeting[0]:
+        e = meeting[1]
+        ans += 1
+
+output.write(f'{ans}')
 
