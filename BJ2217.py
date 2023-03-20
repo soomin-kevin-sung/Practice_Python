@@ -6,10 +6,13 @@ output = sys.stdout
 n = int(input.readline())
 max_weights = []
 
+for i in range(n):
+    max_weights.append(int(input.readline()))
+
+max_weights.sort()
+
 ans = 0
 for i in range(n):
-    w = int(input.readline())
+    ans = max(ans, max_weights[i] * (n - i))
 
-    ans = max(ans, w)
-    ans = max()
-
+output.write(f'{ans}')
