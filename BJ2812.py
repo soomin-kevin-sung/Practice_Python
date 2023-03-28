@@ -4,13 +4,15 @@ input = sys.stdin
 output = sys.stdout
 
 n, k = map(int, input.readline().split())
-s = list(input.readline().strip())
+s = list(map(int, input.readline().strip()))
 
-tmp = [(s[i], i) for i in range(n)]
-tmp.sort()
+st = []
+cnt = 0
+for i in s:
+    while st and st[-1] < i and cnt < k:
+        st.pop()
+        cnt += 1
 
-for i in range(k):
-    s[tmp[i][1]] = ''
+    st.append(i)
 
-for i in range(n):
-    output.write(f'{s[i]}')
+output.write(f'{"".join(map(str, st[:n - k]))}')
