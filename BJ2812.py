@@ -1,34 +1,18 @@
 import sys
-import heapq
-from collections import deque
 
 input = sys.stdin
 output = sys.stdout
 
 n, k = map(int, input.readline().split())
-s = list(input.readline().strip())
+s = list(map(int, input.readline().strip()))
 
-t = n - k
+st = []
+cnt = 0
+for i in s:
+    while st and st[-1] < i and cnt < k:
+        st.pop()
+        cnt += 1
 
-hq = []
-for i in range(n):
-    heapq.heappush(hq, (-min(n - i, t), i, s[i]))
+    st.append(i)
 
-q = deque()
-max_chr = '0'
-ans = []
-
-for i in range(t):
-    while hq and -hq[0][0] == t - i:
-        _, idx, c = heapq.heappop(hq)
-
-        if max_chr < c:
-            max_chr = c
-            q.clear()
-        else:
-            heapq.heappush(q, (c, idx))
-
-    ans.append(max_chr)
-    max_chr = '0'
-
-
+output.write(f'{"".join(map(str, st[:n - k]))}')
