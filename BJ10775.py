@@ -1,12 +1,14 @@
 import sys
 
+# 푸는 중
+
 input = sys.stdin
 output = sys.stdout
 
 
 def docking(dock, i):
-    if dock[i] == i:
-        dock[i] = i - 1
+    if dock[i] == i and dock[i] > 0:
+        dock[i] = docking(dock, dock[i - 1])
     else:
         dock[i] = docking(dock, dock[i])
 
