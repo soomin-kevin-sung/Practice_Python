@@ -1,51 +1,42 @@
 import sys
 
-sets = []
+input = sys.stdin
+output = sys.stdout
 
 
-def main(input=sys.stdin, output=sys.stdout):
-    global sets
-    n, m = map(int, input.readline().split())
-
-    sets = [-1 for i in range(n + 1)]
-
-    for _ in range(m):
-        o, a, b = map(int, input.readline().split())
-
-        if o == 0:
-            union(a, b)
-        else:
-            if find(a) == find(b):
-                output.write('YES\n')
-            else:
-                output.write('NO\n')
+def find_parent(x):
+    if d[x] == x:
+        return x
+    else:
+        d[x] = find_parent(d[x])
+        return d[x]
 
 
 def union(a, b):
-    global sets
+    a = find_parent(a)
+    b = find_parent(b)
 
-    root_a = find(a)
-    root_b = find(b)
+    if a == b:
+        return
 
-    if root_a != root_b:
-        if sets[root_a] < sets[root_b]:
-            sets[root_a] += sets[root_b]
-            sets[root_b] = root_a
-        else:
-            sets[root_b] += sets[root_a]
-            sets[root_a] = root_b
-
-
-def find(x):
-    global sets
-
-    if sets[x] < 0:
-        return x
+    if r[a] < r[b]:
+        d[a] = b
     else:
-        # Path Compression
-        sets[x] = find(sets[x])
-        return sets[x]
+        d[b] = a
+
+        if r[a] == r[b]:
+            r[a] += 1
 
 
-if __name__ == '__main__':
-    main()
+n, m = map(int, input.readline().split())
+
+d = [i for i in range(n + 1)]
+r = [0 for _ in range(n + 1)]
+
+for _ in range(m):
+    c, a, b = map(int, input.readline().split())
+
+    if c == 0:
+        union(a, b)
+    else:
+        output.write(f'{"YES" if find_parent(a) == find_parent(b) else "NO"}\n')
