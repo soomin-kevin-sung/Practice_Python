@@ -5,7 +5,7 @@ output = sys.stdout
 
 
 def find_parent(x):
-    if d[x] == x:
+    if d[x] < 0:
         return x
     else:
         d[x] = find_parent(d[x])
@@ -19,19 +19,17 @@ def union(a, b):
     if a == b:
         return
 
-    if r[a] < r[b]:
-        d[a] = b
-    else:
+    if d[a] < d[b]:
+        d[a] += d[b]
         d[b] = a
-
-        if r[a] == r[b]:
-            r[a] += 1
+    else:
+        d[b] += d[a]
+        d[a] = b
 
 
 n, m = map(int, input.readline().split())
 
-d = [i for i in range(n + 1)]
-r = [0 for _ in range(n + 1)]
+d = [-1 for _ in range(n + 1)]
 
 for _ in range(m):
     c, a, b = map(int, input.readline().split())

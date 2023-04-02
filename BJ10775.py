@@ -1,7 +1,5 @@
 import sys
 
-# 푸는 중
-
 input = sys.stdin
 output = sys.stdout
 
@@ -25,7 +23,7 @@ for _ in range(p):
     if not gate:
         break
 
-    dock[gi] = docking(dock, gate - 1)
+    dock[gate] = docking(dock, gate - 1)
     ans += 1
 
 output.write(f'{ans}')
