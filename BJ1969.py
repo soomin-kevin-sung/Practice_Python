@@ -4,29 +4,28 @@ input = sys.stdin
 output = sys.stdout
 
 n, m = map(int, input.readline().split())
-
-d = [{} for _ in range(m)]
+dnas = []
 
 for _ in range(n):
-    dna = input.readline().strip()
+    dnas.append(input.readline().strip())
 
-    for i in range(m):
-        d[i].setdefault(dna[i], 0)
-        d[i][dna[i]] += 1
-
+ans = ''
+cnts = {'A': 0, 'C': 0, 'G': 0, 'T': 0}
 dist = 0
-ans = ['Z' for _ in range(m)]
-cnts = [0 for _ in range(m)]
 
 for i in range(m):
-    for c in d[i]:
-        if cnts[i] <= d[i][c] and ans[i] > c:
-            cnts[i] = d[i][c]
-            ans[i] = c
+    for j in range(n):
+        cnts[dnas[j][i]] += 1
 
-    del d[i][ans[i]]
+    max_cnt, max_key = 0, ''
+    for c in cnts:
+        if max_cnt < cnts[c]:
+            max_cnt = cnts[c]
+            max_key = c
 
-    for c in d[i]:
-        dist += d[i][c]
+        cnts[c] = 0
+
+    ans += max_key
+    dist += n - max_cnt
 
 output.write(f'{"".join(ans)}\n{dist}')
