@@ -1,0 +1,1 @@
+solution = lambda s1, s2: [a in s2 for a in s1].count(True)
