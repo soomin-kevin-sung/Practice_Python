@@ -16,6 +16,7 @@ for i in range(n):
                 q.append((i, j))
 
 
+ds = [(1, 0), (0, 1), (-1, 0), (0, -1)]
 answer = 1
 vis = set()
 while q:
@@ -25,7 +26,7 @@ while q:
 
     vis.add(node)
 
-    for d in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
+    for d in ds:
         next_x = node[0] + d[0]
         next_y = node[1] + d[1]
 
