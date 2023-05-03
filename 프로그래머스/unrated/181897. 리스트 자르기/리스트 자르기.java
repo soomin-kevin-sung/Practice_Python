@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.*;
 
 class Solution {
     public int[] solution(int n, int[] slicer, int[] num_list) {
@@ -17,10 +17,13 @@ class Solution {
     }
     
     private int[] getProcessedArray(int[] num_list, int[] slicer) {
-        int[] answer = new int[(slicer[1] - slicer[0]) / slicer[2] + 1];
-        int idx = 0;
+        List<Integer> list = new ArrayList();
         for (int i = slicer[0]; i <= slicer[1]; i += slicer[2])
-            answer[idx++] = num_list[i];
+            list.add(num_list[i]);
+        
+        int[] answer = new int[list.size()];
+        for (int i = 0; i < answer.length; i++)
+            answer[i] = list.get(i);
         
         return answer;
     }
