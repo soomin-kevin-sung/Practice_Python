@@ -1,11 +1,10 @@
 class Solution {
     public int solution(String num_str) {
-        int lenOfString = num_str.length();
+        String[] pkts = num_str.split("");
         int sum = 0;
         
-        for (int i = 0; i < lenOfString; i++) {
-            sum += Integer.valueOf(num_str.charAt(i) - 48).intValue();
-        }
+        for (String pkt : pkts)
+            sum += Integer.valueOf(pkt);
         
         return sum;
     }
