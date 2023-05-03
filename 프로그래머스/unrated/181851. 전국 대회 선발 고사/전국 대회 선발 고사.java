@@ -7,10 +7,7 @@ class Solution {
         for (int i = 0; i < numOfDatas; i++)
             datas[i] = new Data(i, rank[i], attendance[i]);
         
-        Arrays.sort(datas);
-        for (int i = 0; i < numOfDatas; i++)
-            System.out.printf("%d ", datas[i].idx);
-        
+        Arrays.sort(datas);        
         return datas[0].idx * 10000 + datas[1].idx * 100 + datas[2].idx;
     }
     
