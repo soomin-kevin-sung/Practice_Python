@@ -3,10 +3,8 @@ class Solution {
         StringBuilder builder = new StringBuilder();
         int len = my_string.length();
         
-        for (int i = 0; i < len; i += m) {
-            if (i + c - 1 < len)
-                builder.append(my_string.charAt(i + c - 1));
-        }
+        for (int i = c - 1; i < len; i += m)
+            builder.append(my_string.charAt(i));
         
         return builder.toString();
     }
