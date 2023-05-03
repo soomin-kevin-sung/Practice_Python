@@ -15,7 +15,7 @@ class Solution {
     private int[] toArray(ArrayList<Integer> list) {
         int[] result = new int[list.size()];
         for (int i = 0; i < result.length; i++)
-            result[i] = list.get(i).intValue();
+            result[i] = list.get(i);
         
         return result;
     }
