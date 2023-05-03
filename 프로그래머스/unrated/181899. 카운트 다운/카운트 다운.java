@@ -2,6 +2,10 @@ import java.util.stream.*;
 
 class Solution {
     public int[] solution(int start, int end) {
-        return IntStream.rangeClosed(-start, -end).map(i -> -i).toArray();
+        int[] answer = new int[start - end + 1];
+        for (int i = start; i >= end; i--)
+            answer[start - i] = i;
+        
+        return answer;
     }
 }
