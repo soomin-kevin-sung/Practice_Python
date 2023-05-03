@@ -4,48 +4,69 @@ class Solution {
     public int solution(int a, int b, int c, int d) {
         // a == b == c == d
         if (a == b && b == c && c == d)
-            return 1111 * a;
+            return ps1(a);
         // a == b == c | d
         else if (a == b && b == c)
-            return (int)Math.pow(10 * a + d, 2);
+            return ps2(a, d);
         // a == b == d | c
         else if (a == b && b == d)
-            return (int)Math.pow(10 * a + c, 2);
+            return ps2(a, c);
         // a == c == d | b
         else if (a == c && c == d)
-            return (int)Math.pow(10 * a + b, 2);
+            return ps2(a, b);
         // b == c == d | a
         else if (b == c && c == d)
-            return (int)Math.pow(10 * b + a, 2);
+            return ps2(b, a);
         // a == b | c == d
         else if (a == b && c == d)
-            return (a + c) * Math.abs(a - c);
+            return ps3(a, c);
         // a == c | b == d
         else if (a == c && b == d)
-            return (a + b) * Math.abs(a - b);
+            return ps3(a, b);
         // a == d | b == c
         else if (a == d && b == c)
-            return (a + b) * Math.abs(a - b);
+            return ps3(a, b);
         // a == b | c | d
         else if (a == b)
-            return c * d;
+            return ps4(c, d);
         // a == c | b | d
         else if (a == c)
-            return b * d;
+            return ps4(b, d);
         // a == d | b | c
         else if (a == d)
-            return b * c;
+            return ps4(b, c);
         // b == c | a | d
         else if (b == c)
-            return a * d;
+            return ps4(a, d);
         // b == d | a | c
         else if (b == d)
-            return a * c;
+            return ps4(a, c);
         // c == d | a | b
         else if (c == d)
-            return a * b;
+            return ps4(a, b);
         // a | b | c | d
         else
-            return Math.min(a, Math.min(b, Math.min(c, d)));
+            return ps5(a, b, c, d);
+    }
+    
+    private int ps1(int a) {
+        return 1111 * a;
+    }
+    
+    private int ps2(int a, int b)
+    {
+        return (int)Math.pow(10 * a + b, 2);
+    }
+    
+    private int ps3(int a, int b) {
+        return (a + b) * Math.abs(a - b);
+    }
+    
+    private int ps4(int a, int b) {
+        return a * b;
+    }
+    
+    private int ps5(int a, int b, int c, int d) {
+        return Math.min(a, Math.min(b, Math.min(c, d)));
     }
 }
