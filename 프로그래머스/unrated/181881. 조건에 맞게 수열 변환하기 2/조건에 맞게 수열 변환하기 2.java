@@ -3,27 +3,23 @@ import java.util.Arrays;
 class Solution {
     public int solution(int[] arr) {
         int answer = 0;
-        int[] prevArr = arr;
-        while (true) {
-            answer++;
-            int[] newArr = getCalculatedArray(prevArr);
-            if (Arrays.equals(prevArr, newArr))
-                return answer - 1;
-            
-            prevArr = newArr;
-        }
+        for (int i = 0; i < arr.length; i++)
+            answer = Math.max(answer, getMaxChangeCount(arr[i]));
+        
+        return answer;
     }
     
-    private int[] getCalculatedArray(int[] arr) {
-        int[] answer = new int[arr.length];
+    private int getMaxChangeCount(int n) {
+        int answer = 0;
         
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] >= 50 && arr[i] % 2 == 0)
-                answer[i] = arr[i] / 2;
-            else if (arr[i] < 50 && arr[i] % 2 == 1)
-                answer[i] = arr[i] * 2 + 1;
+        while (true) {
+            if (n >= 50 && n % 2 == 0)
+                n /= 2;
+            else if (n < 50 && n % 2 == 1)
+                n = n * 2 + 1;
             else
-                answer[i] = arr[i];
+                break;
+            answer++;
         }
         
         return answer;
