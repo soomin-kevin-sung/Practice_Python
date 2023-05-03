@@ -10,7 +10,11 @@ class Solution {
                 pop(st, arr[i]);
         }
         
-        return st.stream().mapToInt(Integer::intValue).toArray();
+        int[] answer = new int[st.size()];
+        for (int i = 0; i < answer.length; i++)
+            answer[i] = st.get(i);
+        
+        return answer;
     }
     
     private void push(Stack<Integer> st, int v, int e) {
