@@ -8,7 +8,7 @@ class Solution:
 
             s.add(num)
             m = max(m, num)
-
+            
         for i in range(1, m + 1):
             if i not in s:
                 return i
